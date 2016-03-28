@@ -1,0 +1,176 @@
+apply plugin: 'com.android.application'
+import groovy.transform.Field
+
+initProjects()
+addCodeGenTasks()
+@Field
+def _projects = ['app'] as Set
+@Field
+def _codegenDirs = [] as Set
+@Field
+def _ignored = ['codegen', 'build', 'gradle'] as Set
+def initProjects() {
+    File srcDir = file(project.rootDir.getAbsolutePath())
+
+    // Create a file collection using a closure
+    FileCollection collection = files { srcDir.listFiles() }
+
+    collection.each {File file ->
+        if (file.isDirectory() && !file.name.startsWith(".") && !_ignored.contains(file.name)) {
+            _projects.add(file.name)
+        }
+    }
+}
+
+def printProjects() {
+    println("projects")
+    for (prj in _projects) {
+        println prj
+    }
+    println("collectSrcDir")
+    for (dir in collectSourceDirectories()) {
+        println dir
+    }
+}
+
+
+
+def addCodeGenTasks() {
+    def codeGen = tasks.create('codegen')
+
+    File outputDir = file("$buildDir/generated/source/codegen/")
+    outputDir.delete()
+    for (prj in _projects) {
+
+
+        def autoGenPerPrj = tasks.create("codegen_$prj", CodeGenTask)
+        autoGenPerPrj.inputDir = file("../$prj/codegen")
+        autoGenPerPrj.outputDir = outputDir
+
+
+        println "*added codegen task for $prj ${autoGenPerPrj.name}"
+        _codegenDirs.add(autoGenPerPrj.outputDir.absolutePath)
+
+        tasks.whenTaskAdded { task ->
+            if (task.name.startsWith('generate') && task.name.endsWith('Sources')) {
+//            if (task.name.endsWith('Sources')) {
+                println("task depen ${task.name} ${autoGenPerPrj.name}")
+                task.dependsOn autoGenPerPrj
+            }
+        }
+    }
+
+}
+
+
+class CodeGenTask extends DefaultTask {
+    def File inputDir
+
+    def File outputDir
+
+    @TaskAction
+    void exec() {
+        codegen()
+    }
+
+    /**
+     * 调用codegen.jar来生成java文件
+     * 在template模版下要有对应的${type}.vm文件
+     * @return
+     */
+    def codegen() {
+
+        File[] collection = inputDir.listFiles()
+        // 对inputPath下面的每个文件调用相应的处理
+        collection.each {File file ->
+            if (!file.name.startsWith(".")) {
+                String type = file.name.substring(file.name.lastIndexOf(".") + 1)
+                ant.java(jar: "${rootPath}/codegen/codegen.jar", fork: true) {
+                    arg(value: type)
+                    arg(value: "${rootPath}/codegen/template")
+                    arg(value: "${type}.vm")
+                    arg(value: file.absolutePath)
+                    arg(value: outputDir.absolutePath)
+                }
+                println("code gen ${file.absolutePath}")
+                println("${rootPath}/codegen/codegen.jar ${type} ${rootPath}/codegen/template db.vm ${file.absolutePath} ${outputDir.absolutePath}/db")
+            }
+        }
+    }
+
+    def getRootPath() {
+        return project.rootDir.getAbsolutePath()
+    }
+}
+task clean(type: Delete) {
+    delete buildDir
+}
+
+def collectSourceDirectories() {
+
+    def srcDirs = [] as Set
+    for (prj in _projects) {
+        def srcFile = rootProject.file("${prj}/src/main/java") as File
+        if (srcFile.exists()) {
+            srcDirs.add(srcFile.absolutePath)
+        }
+    }
+    for (codegen in _codegenDirs) {
+        srcDirs.add(codegen)
+    }
+
+    for (dir in srcDirs) {
+        println(dir)
+    }
+    return srcDirs
+}
+
+
+
+
+
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "cn.apacal.weblog"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug {
+            debuggable = true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            java {
+                setSrcDirs collectSourceDirectories()
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
+    compile 'com.android.support:appcompat-v7:23.2.1'
+
+    // 选择图片插件
+    compile 'me.iwf.photopicker:PhotoPicker:0.2.9@aar'
+
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.bumptech.glide:glide:3.6.0'
+}
+

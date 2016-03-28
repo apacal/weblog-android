@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="MenuButton" >
+        <item name="android:background">@drawable/btn_style_white_no_corners</item>
+        <item name="android:gravity">left</item>
+        <item name="android:paddingLeft">@dimen/large_padding</item>
+    </style>
+
+
+
+</resources>

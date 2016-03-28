@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="min_voice_width">100dp</dimen>
+    <dimen name="normal_avatar">42dp</dimen>
+    <dimen name="smaller_padding">3dp</dimen>
+    <dimen name="little_padding">6dp</dimen>
+    <dimen name="middle_padding">10dp</dimen>
+    <dimen name="normal_padding">12dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
+    <dimen name="list_padding">20dp</dimen>
+
+
+    <!-- TextSize -->
+    <dimen name="LargestTextSize">30dp</dimen>
+    <dimen name="BigerMoreTextSize">26dp</dimen>
+    <dimen name="BigerTextSize">24dp</dimen>
+    <dimen name="ActionBarTextSize">18dp</dimen>
+    <dimen name="BigTextSize">17dp</dimen>
+    <dimen name="NormalTextSize">16dp</dimen>
+    <dimen name="HintTextSize">14dp</dimen>
+    <dimen name="SmallerTextSize">13dp</dimen>
+    <dimen name="SmallestTextSize">12dp</dimen>
+    <dimen name="DialogTitleTextSize">20dp</dimen>
+
+    <!-- button -->
+    <dimen name="ButtonCornerSize">4dp</dimen>
+
+    <dimen name="NormalImageSize">100dp</dimen>
+</resources>

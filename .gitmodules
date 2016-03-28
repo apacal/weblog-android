@@ -1,0 +1,3 @@
+[submodule "app/src/main/jni/lwsdk_cpp"]
+	path = app/src/main/jni/lwsdk_cpp
+	url = http://git.code.oa.com/apacalzhong/cloudvoicesdk-cpp.git
