@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:form="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/NormalPadding"
+    android:paddingRight="@dimen/NormalPadding"
+    android:paddingTop="@dimen/NormalPadding" >
+
+
+
+
+
+</LinearLayout>

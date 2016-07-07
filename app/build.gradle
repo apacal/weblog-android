@@ -3,6 +3,10 @@ import groovy.transform.Field
 
 initProjects()
 addCodeGenTasks()
+fixManifestsMerge()
+disableAndroidTests()
+addJarDependencies()
+addJniLibsDependencies()
 @Field
 def _projects = ['app'] as Set
 @Field
@@ -30,6 +34,28 @@ def printProjects() {
     println("collectSrcDir")
     for (dir in collectSourceDirectories()) {
         println dir
+    }
+}
+
+printProjects()
+import com.android.build.gradle.internal.dependency.ManifestDependencyImpl
+def fixManifestsMerge() {
+    tasks.whenTaskAdded { task ->
+        if (task.name.startsWith('process') && task.name.endsWith('Manifest')) {
+
+            def libraryManifests = collectLibraryManifestes()
+            println "*fix manifest merger $task.project, collected " + libraryManifests.size()
+            task.doFirst {
+                task.conventionMapping.map('libraries') {
+                    List<ManifestDependencyImpl> manifests = []
+                    for (amf in libraryManifests) {
+                        manifests.add(new ManifestDependencyImpl(file(amf), []))
+                        println "*added $amf"
+                    }
+                    return manifests
+                }
+            }
+        }
     }
 }
 
@@ -106,6 +132,45 @@ task clean(type: Delete) {
     delete buildDir
 }
 
+def disableAndroidTests() {
+    tasks.whenTaskAdded { task ->
+        if (task.name.contains("AndroidTest")) {
+            task.enabled = false
+        }
+    }
+}
+
+def addJarDependencies() {
+    for (prj in collectLibsDirectories()) {
+        dependencies {
+            compile fileTree(dir: "${prj}", include: '*.jar')
+        }
+    }
+}
+
+def addJniLibsDependencies() {
+    for (prj in collectJniLibsDirectories()) {
+        dependencies {
+            compile fileTree(dir: "${prj}", include: '*.so')
+        }
+    }
+}
+
+def collectLibraryManifestes() {
+    def manifests = [] as Set
+    for (prj in _projects) {
+        if (prj == 'app') {
+            continue
+        }
+
+        def srcFile = rootProject.file("${prj}/src/main/AndroidManifest.xml") as File
+        if (srcFile.exists()) {
+            manifests.add(srcFile.absolutePath)
+        }
+    }
+    return manifests
+}
+
 def collectSourceDirectories() {
 
     def srcDirs = [] as Set
@@ -119,16 +184,52 @@ def collectSourceDirectories() {
         srcDirs.add(codegen)
     }
 
-    for (dir in srcDirs) {
-        println(dir)
-    }
     return srcDirs
 }
 
+def collectResourceDirectories() {
+    def dirs = [] as Set
+    for (prj in _projects) {
+        def srcFile = rootProject.file("${prj}/src/main/res") as File
+        if (srcFile.exists()) {
+            dirs.add(srcFile.absolutePath)
+        }
 
 
+    }
+    return dirs
+}
+def collectAssetsDirectories() {
+    def dirs = [] as Set
+    for (prj in _projects) {
+        def srcFile = rootProject.file("${prj}/src/main/assets") as File
+        if (srcFile.exists()) {
+            dirs.add(srcFile.absolutePath)
+        }
+    }
+    return dirs
+}
+def collectLibsDirectories() {
+    def dirs = [] as Set
+    for (prj in _projects) {
+        def srcFile = rootProject.file("${prj}/src/main/libs") as File
+        if (srcFile.exists()) {
+            dirs.add(srcFile.absolutePath)
+        }
+    }
+    return dirs
+}
 
-
+def collectJniLibsDirectories() {
+    def dirs = [] as Set
+    for (prj in _projects) {
+        def srcFile = rootProject.file("${prj}/src/main/jniLibs") as File
+        if (srcFile.exists()) {
+            dirs.add(srcFile.absolutePath)
+        }
+    }
+    return dirs
+}
 
 
 android {
@@ -156,10 +257,33 @@ android {
             java {
                 setSrcDirs collectSourceDirectories()
             }
+            manifest {
+//                srcFile 'AndroidManifest.xml'
+            }
+            java {
+                setSrcDirs collectSourceDirectories()
+            }
+            resources {
+                setSrcDirs collectSourceDirectories()
+            }
+            aidl {
+                setSrcDirs collectSourceDirectories()
+            }
+            renderscript {
+                setSrcDirs collectSourceDirectories()
+            }
+            res {
+                setSrcDirs collectResourceDirectories()
+            }
+            assets {
+                setSrcDirs collectAssetsDirectories()
+            }
+            jniLibs {
+                setSrcDirs collectJniLibsDirectories()
+            }
         }
     }
 }
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
     compile 'com.android.support:appcompat-v7:23.2.1'

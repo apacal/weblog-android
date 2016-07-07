@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="min_voice_width">100dp</dimen>
-    <dimen name="normal_avatar">42dp</dimen>
-    <dimen name="smaller_padding">3dp</dimen>
-    <dimen name="little_padding">6dp</dimen>
-    <dimen name="middle_padding">10dp</dimen>
-    <dimen name="normal_padding">12dp</dimen>
-    <dimen name="large_padding">16dp</dimen>
-    <dimen name="list_padding">20dp</dimen>
 
-
-    <!-- TextSize -->
+    <!-- text size -->
     <dimen name="LargestTextSize">30dp</dimen>
     <dimen name="BigerMoreTextSize">26dp</dimen>
     <dimen name="BigerTextSize">24dp</dimen>
@@ -22,8 +13,153 @@
     <dimen name="SmallestTextSize">12dp</dimen>
     <dimen name="DialogTitleTextSize">20dp</dimen>
 
+    <!-- not standard -->
+    <dimen name="TinyTextSize">10dp</dimen>
+    <dimen name="TinierTextSize">9dp</dimen>
+    <dimen name="SnsSightDescTextSize">18dp</dimen>
+
+    <!-- padding/margin -->
+    <dimen name="ZeroDPPadding">0dp</dimen>
+    <dimen name="OneDPPadding">1dp</dimen>
+    <dimen name="OnePXPadding">1px</dimen>
+    <dimen name="SmallestPadding">2dp</dimen>
+    <dimen name="BasicPaddingSize">4dp</dimen>
+    <dimen name="SmallPadding">8dp</dimen>
+    <dimen name="BigPadding">12dp</dimen>
+    <dimen name="BiggerPadding">14dp</dimen>
+    <dimen name="LargePadding">16dp</dimen>
+    <dimen name="LargerPadding">24dp</dimen>
+    <dimen name="LargestPadding">32dp</dimen>
+    <dimen name="PopPadding">40dp</dimen>
+
+    <!-- these paddings are not standard, use them carefully -->
+    <dimen name="SmallerPadding">3dp</dimen>
+    <dimen name="LittlePadding">6dp</dimen>
+    <dimen name="MiddlePadding">10dp</dimen>
+    <dimen name="NormalPadding">12dp</dimen>
+    <dimen name="ListPadding">20dp</dimen>
+    <dimen name="FooterPadding">11dp</dimen>
+    <dimen name="NoPadding">0dp</dimen>
+    <dimen name="SettingCatalogPadding">20dp</dimen>
+    <dimen name="ImgIconPadding">40dp</dimen>
+
+    <!-- list style -->
+    <dimen name="LargeListHeight">80dp</dimen>
+    <dimen name="NormalListHeight">64dp</dimen>
+    <dimen name="MediumListHeight">56dp</dimen>
+    <dimen name="SmallListHeight">48dp</dimen>
+    <dimen name="ContactListHeight">52dp</dimen>
+    <dimen name="ContactListHeightLarge">65dp</dimen>
+    <dimen name="ContactHeaderHeight">66dp</dimen>
+    <dimen name="MMClearEditTextMinHeight">37dp</dimen>
+
+    <dimen name="ListHintTopMargin">100dp</dimen>
+
+    <!-- icon size -->
+    <dimen name="SmallIconSize">27dp</dimen>
+    <dimen name="NormalIconSize">32dp</dimen>
+    <dimen name="BigIconSize">48dp</dimen>
+    <dimen name="LargeIconSize">60dp</dimen>
+    <dimen name="LargerIconSize">80dp</dimen>
+    <dimen name="LargerImgIconSize">160dp</dimen>
+
+    <!-- button style -->
+    <dimen name="SmallButtonHeight">32dp</dimen>
+    <dimen name="SmallButtonWidth">48dp</dimen>
+    <dimen name="NormalButtonHeight">48dp</dimen>
+    <dimen name="NormalButtonWidth">80dp</dimen>
+    <dimen name="ConfirmButtonWidth">64dp</dimen>
+    <dimen name="MMTwinButtonMinSize">50dp</dimen>
+    <dimen name="CheckBoxWidth">32dp</dimen>
+    <dimen name="CheckBoxHeight">32dp</dimen>
+
+    <!-- dialog -->
+    <dimen name="DividerHeight">2px</dimen>
+    <dimen name="DividerSmallHeight">1px</dimen>
+    <dimen name="MinMenuWidth">200dp</dimen>
+    <dimen name="MinDialogWidth">320dp</dimen>
+    <dimen name="MinDialogHeight">93dp</dimen>
+    <dimen name="DialogHeaderHeight">64dp</dimen>
+
+    <!-- progress bar -->
+    <dimen name="small_horizontal_progress_height">4dp</dimen>
+    <dimen name="big_horizontal_progress_height">8dp</dimen>
+    <dimen name="progress_cancel_btn_padding">3dp</dimen>
+
+    <!-- action bar -->
+    <dimen name="DefaultActionbarHeightPort">49dp</dimen>
+    <dimen name="DefaultActionbarHeightLand">40dp</dimen>
+    <dimen name="DefaultTabbarHeight">54dp</dimen>
+    <dimen name="topTabbarHeight">40dp</dimen>
+
+    <!-- avatar size -->
+    <dimen name="BigLargeAvatarSize">76dp</dimen>
+    <dimen name="BigAvatarSize">64dp</dimen>
+    <!-- 头像右上角有未读数等图片的， NormalAvatarWrapSize就是包着未读数和头像的ViewGroup的size -->
+    <dimen name="NormalAvatarSize">48dp</dimen>
+    <dimen name="NormalAvatarWrapSize">56dp</dimen>
+    <dimen name="NormalAvatarLargeSize">60dp</dimen>
+    <dimen name="NormalAvatarWrapLargeSize">70dp</dimen>
+    <dimen name="SmallAvatarSize">40dp</dimen>
+    <dimen name="SmallAvatarWrapSize">48dp</dimen>
+    <dimen name="MiniAvatarSize">32dp</dimen>
+
+
+    <!-- For address ui ONLY! -->
+    <dimen name="ContactAvatarSize">36dp</dimen>
+    <dimen name="ContactAvatarWrapSize">44dp</dimen>
+    <dimen name="AddressScrollBarWidth">24dp</dimen>
+
+    <!-- chatting ui -->
+    <dimen name="ChatAvatarWrapSize">44dp</dimen>
+    <dimen name="ChattingTextExpandedSize">18dp</dimen>
+    <dimen name="ChattingContentMinHeight">40dp</dimen>
+    <dimen name="ChattingFootSmallerPadding">4dp</dimen>
+    <dimen name="ChattingFootPaddingBottom">7.5dp</dimen>
+    <dimen name="ChattingFootPaddingTop">9dp</dimen>
+    <dimen name="ChattingFootSendMargin">4dp</dimen>
+    <dimen name="ChattingFootSendMinWidth">44dp</dimen>
+    <dimen name="ChattingFootSendHeight">32dp</dimen>
+    <dimen name="ChattingFootVoiceHeight">34dp</dimen>
+    <dimen name="ChattingFootSwitcherWidth">52dp</dimen>
+    <dimen name="ChattingFootEditMaxHeigh">84dp</dimen>
+    <dimen name="ChattingFootEditMinHeigh">32dp</dimen>
+    <dimen name="chatting_loaction_item_width">220dp</dimen>
+    <dimen name="chatting_loaction_item_height">150dp</dimen>
+
+    <!-- conversation -->
+    <dimen name="ConversationTimeSmallerWidth">65dp</dimen>
+    <dimen name="ConversationTimeSmallWidth">80dp</dimen>
+    <dimen name="ConversationTimeBigWidth">95dp</dimen>
+    <dimen name="ConversationTimeBiggerWidth">122dp</dimen>
+
+    <!-- profile -->
+    <dimen name="FixedTitleWidth">82dp</dimen>
+
+    <dimen name="CheckBoxMaxHeight">24dp</dimen>
+
+    <!-- input -->
+    <dimen name="InputEditTextNormalHeight">36dp</dimen>
+    <dimen name="InputEditTextMinHeight">32dp</dimen>
+
     <!-- button -->
     <dimen name="ButtonCornerSize">4dp</dimen>
 
-    <dimen name="NormalImageSize">100dp</dimen>
+    <!-- dialog -->
+    <dimen name="MinDialogTitleHeight">64dp</dimen>
+
+
+
+
+
+    <dimen name="min_voice_width">100dp</dimen>
+    <dimen name="normal_avatar">42dp</dimen>
+    <dimen name="smaller_padding">3dp</dimen>
+    <dimen name="little_padding">6dp</dimen>
+    <dimen name="middle_padding">10dp</dimen>
+    <dimen name="normal_padding">12dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
+    <dimen name="list_padding">20dp</dimen>
+
+
 </resources>

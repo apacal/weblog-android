@@ -15,6 +15,7 @@ public class $tableName extends IDBItem{
     final static String TAG = "TABLE-$tableName";
 
     public static final String TABLE_NAME = "$tableName";
+    public static final String PKEY = "id";
 
     public static String getSql() {
         StringBuilder sb = new StringBuilder();
@@ -35,7 +36,7 @@ public class $tableName extends IDBItem{
 
 
     public String getPKey() {
-        return "id";
+        return PKEY;
     }
 
     public int getPKeyValue() {
@@ -66,7 +67,6 @@ public class $tableName extends IDBItem{
     @Override
     public ContentValues convertTo() {
         ContentValues values = new ContentValues();
-        values.put("id", field_id);
 #foreach($key in $fields.keySet())
         values.put("$key", field_$key);
 #end

@@ -39,7 +39,7 @@ public abstract class CommStg<T extends IDBItem> {
     public long insert(T item) {
         long ret = db.insert(getTableName(), null, item.convertTo());
         Log.d(TAG, "insert item[%s] ret[%d]", item, ret);
-        onChange(item, true);
+        onChange(item, Constans.StgChangeType.STG_CHANGE_TYPE_UPDATE);
         return ret;
     }
 
@@ -52,14 +52,16 @@ public abstract class CommStg<T extends IDBItem> {
     public int update(T item, String whereClause, String[] whereArgs) {
         int ret = db.update(getTableName(), item.convertTo(), whereClause, whereArgs);
         Log.d(TAG, "update row[%s], item[%s]", ret, item);
-        onChange(item, false);
+        onChange(item, Constans.StgChangeType.STG_CHANGE_TYPE_UPDATE);
         return ret;
     }
 
     public int delete(T item) {
         String sql = String.format("%s=?", item.getPKey());
-        Log.d(TAG, "delete sql[%s %s] item[%s]", sql, item.getPKeyValue(), item);
-        return db.delete(getTableName(), sql, new String[]{String.valueOf(item.getPKeyValue())});
+        int ret = db.delete(getTableName(), sql, new String[]{String.valueOf(item.getPKeyValue())});
+        Log.d(TAG, "delete sql[%s %s] item[%s], ret[%d]", sql, item.getPKeyValue(), item, ret);
+        onChange(item, Constans.StgChangeType.STG_CHANGE_TYPE_DELETE);
+        return ret;
     }
 
     public void execSQL(String sql) {
@@ -77,11 +79,11 @@ public abstract class CommStg<T extends IDBItem> {
         mChangeListeners.remove(stgOnChange);
     }
 
-    protected void onChange(T item, boolean isInsert) {
-        Log.d(TAG, "onChange item[%s] isInsert[%s], mChangeListeners[%d][%s]", item, isInsert, mChangeListeners.size(), mChangeListeners);
+    protected void onChange(T item, int type) {
+        Log.d(TAG, "onChange item[%s] type[%s], mChangeListeners[%d][%s]", item, type, mChangeListeners.size(), mChangeListeners);
         if (mChangeListeners.size() > 0) {
             for (StgOnChange stgOnChange : mChangeListeners) {
-                stgOnChange.onChange(item, isInsert);
+                stgOnChange.onChange(item, type);
             }
         }
     }

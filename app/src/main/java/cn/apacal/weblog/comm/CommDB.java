@@ -81,11 +81,16 @@ public class CommDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        for(int key : baseDBFactories.keySet()) {
-            for(String sql : baseDBFactories.get(key).getSQLs()) {
-                Log.d(TAG, "create table sql %s", sql);
-                db.execSQL(sql);
+        try {
+            for(int key : baseDBFactories.keySet()) {
+                for(String sql : baseDBFactories.get(key).getSQLs()) {
+                    Log.d(TAG, "create table sql %s", sql);
+                    db.execSQL(sql);
+                }
             }
+
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
         }
     }
 
